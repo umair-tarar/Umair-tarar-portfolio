@@ -1,0 +1,126 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 236 58% 6%;
+    --foreground: 217 65% 96%;
+
+    --card: 235 45% 12%;
+    --card-foreground: 217 65% 96%;
+
+    --popover: 235 45% 12%;
+    --popover-foreground: 217 65% 96%;
+
+    --primary: 216 92% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 227 57% 18%;
+    --secondary-foreground: 217 65% 96%;
+
+    --muted: 231 35% 20%;
+    --muted-foreground: 225 20% 70%;
+
+    --accent: 216 92% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 231 34% 24%;
+    --input: 231 34% 24%;
+    --ring: 216 92% 55%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 235 53% 7%;
+    --sidebar-foreground: 217 65% 96%;
+    --sidebar-primary: 216 92% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 231 34% 16%;
+    --sidebar-accent-foreground: 217 65% 96%;
+    --sidebar-border: 231 34% 22%;
+    --sidebar-ring: 216 92% 55%;
+  }
+
+  .dark {
+    --background: 216 25% 95%;
+    --foreground: 234 45% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 234 45% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 234 45% 10%;
+
+    --primary: 216 92% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 22% 92%;
+    --secondary-foreground: 234 45% 10%;
+
+    --muted: 222 15% 88%;
+    --muted-foreground: 225 12% 38%;
+
+    --accent: 216 92% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 222 15% 82%;
+    --input: 222 15% 82%;
+    --ring: 216 92% 39%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 234 45% 10%;
+    --sidebar-primary: 216 92% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 16% 88%;
+    --sidebar-accent-foreground: 234 45% 10%;
+    --sidebar-border: 222 16% 88%;
+    --sidebar-ring: 216 92% 39%;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground;
+    font-family: "Manrope", "Inter", sans-serif;
+    scrollbar-width: none;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Poppins", "Manrope", sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
