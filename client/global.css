@@ -303,6 +303,19 @@
   }
 
 
+  /* animated highlight bars */
+  .bar-fill {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s;
+  }
+  .is-visible .bar-fill {
+    transform: scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bar-fill { transform: none; transition: none; }
+  }
+
   /* Lenis smooth scroll */
   html.lenis,
   html.lenis body {

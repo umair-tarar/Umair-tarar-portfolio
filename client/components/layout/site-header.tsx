@@ -79,7 +79,7 @@ export const SiteHeader = () => {
         <div className="flex items-center gap-3">
           <Link
             to="/#book"
-            className="hidden rounded-3xl bg-gradient-to-br from-primary/60 to-primary/40 px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition transform hover:-translate-y-0.5 md:inline-flex"
+            className="hidden whitespace-nowrap rounded-3xl bg-gradient-to-br from-primary/60 to-primary/40 px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition transform hover:-translate-y-0.5 md:inline-flex"
             onClick={(e) => handleNavClick(e, "/#book")}
           >
             Free Audit

@@ -40,22 +40,12 @@ const footerLinks: FooterLinkColumn[] = [
 
 export const SiteFooter = () => (
   <footer className="border-t border-white/10 bg-background/95">
-    <div className="border-t border-white/10 px-6 py-6">
+    <div className="px-6 py-6">
       <div className="mx-auto max-w-6xl text-center">
         <p className="text-xs md:text-sm text-foreground/60">
-          © 2025 <span className="text-white font-semibold">M.Umair</span>. All
-          rights reserved.
-        </p>
-        <p className="mt-1 text-xs md:text-sm text-foreground/50">
-          Developed by{" "}
-          <a
-            href="http://alihassan-online.netlify.app/"
-            className="text-white font-semibold"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ali Hassan
-          </a>
+          © {new Date().getFullYear()}{" "}
+          <span className="font-semibold text-white">M.Umair</span>. All rights
+          reserved.
         </p>
       </div>
     </div>
