@@ -418,3 +418,26 @@ export const CALCULATOR = {
   defaultValue: 100,
   defaultCloseRate: 30,
 };
+
+export type Client = {
+  name: string;
+  /** Path to the logo file, e.g. "/logos/cebrix.png". Leave out to show initials. */
+  logo?: string;
+  /** Optional small line under the name, e.g. "Marketing Agency". */
+  category?: string;
+};
+
+/**
+ * Companies shown in the scrolling "Trusted By" strip.
+ * To add a logo: put the image in the public/logos folder and set `logo`.
+ */
+export const CLIENTS: Client[] = [
+  { name: "Cebrix Marketing" },
+  { name: "Tech-Hub Faisalabad" },
+  { name: "HyperNexis" },
+  { name: "CareerConnectly" },
+  { name: "DEP LLC" },
+  { name: "QuickBid Estimating" },
+  { name: "Surblund International" },
+  { name: "Global Turbo" },
+];
