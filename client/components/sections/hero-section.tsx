@@ -39,9 +39,11 @@ const HeroSection = () => {
 
   return (
     <section id="top" className="relative isolate overflow-hidden">
-      <div aria-hidden className="aurora aurora-a" />
-      <div aria-hidden className="aurora aurora-b" />
-      <div aria-hidden className="hero-grid" />
+      <div aria-hidden className="hero-bg">
+        <div className="aurora aurora-a" />
+        <div className="aurora aurora-b" />
+        <div className="hero-grid" />
+      </div>
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 pb-20 pt-10 lg:grid-cols-2 lg:pt-16">
         <div>

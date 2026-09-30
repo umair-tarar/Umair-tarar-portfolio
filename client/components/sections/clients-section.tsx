@@ -1,44 +1,22 @@
 import SectionHeading from "@/components/common/section-heading";
 import { CLIENTS, type Client } from "@/data/site";
 
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
-}
-
-function ClientCard({ client }: { client: Client }) {
+function ClientItem({ client }: { client: Client }) {
   return (
-    <div className="card-premium group flex w-64 shrink-0 flex-col items-center gap-4 rounded-3xl px-6 pb-6 pt-7 text-center">
-      <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-white/95 p-3 shadow-lg shadow-black/30 ring-1 ring-white/40 transition-transform duration-300 group-hover:scale-105">
-        {client.logo ? (
-          <img
-            src={client.logo}
-            alt={`${client.name} logo`}
-            className="h-full w-full object-contain"
-            loading="lazy"
-            draggable={false}
-          />
-        ) : (
-          <span className="flex h-full w-full items-center justify-center rounded-xl bg-gradient-to-br from-brand to-brand-dark font-display text-2xl font-bold text-white">
-            {initials(client.name)}
-          </span>
-        )}
-      </div>
-      <div>
-        <p className="font-display text-lg font-semibold tracking-wide text-white">
-          {client.name}
-        </p>
-        {client.category && (
-          <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.22em] text-white/45">
-            {client.category}
-          </p>
-        )}
-      </div>
+    <div className="group flex shrink-0 items-center gap-4">
+      {client.logo && (
+        <img
+          src={client.logo}
+          alt={`${client.name} logo`}
+          className="h-12 w-auto max-w-[9rem] object-contain opacity-80 transition duration-300 group-hover:opacity-100"
+          loading="lazy"
+          draggable={false}
+        />
+      )}
+      <span className="whitespace-nowrap font-display text-2xl font-semibold tracking-tight text-white/55 transition-colors duration-300 group-hover:text-white sm:text-3xl">
+        {client.name}
+      </span>
+      <span aria-hidden className="ml-8 h-1.5 w-1.5 rounded-full bg-brand/60" />
     </div>
   );
 }
@@ -65,14 +43,14 @@ export const ClientsSection = () => {
         </p>
       </div>
 
-      {/* Right-to-left scrolling logos. Hover to pause. */}
-      <div className="marquee-mask mt-14 overflow-hidden" aria-label="Client logos">
+      {/* Right-to-left ticker. Hover to pause. */}
+      <div className="marquee-mask mt-14 overflow-hidden py-4" aria-label="Client names">
         <div
-          className="marquee-track flex w-max gap-6 pr-6"
+          className="marquee-track flex w-max items-center gap-8 pr-8"
           style={{ animationDuration: `${Math.max(30, CLIENTS.length * 6)}s` }}
         >
           {items.map((client, i) => (
-            <ClientCard key={`${client.name}-${i}`} client={client} />
+            <ClientItem key={`${client.name}-${i}`} client={client} />
           ))}
         </div>
       </div>

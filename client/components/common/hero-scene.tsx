@@ -120,10 +120,10 @@ function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) 
           <sphereGeometry args={[0.62, 48, 48]} />
           <meshStandardMaterial
             color={brand}
-            metalness={0.55}
-            roughness={0.22}
+            metalness={0.35}
+            roughness={0.32}
             emissive={brand}
-            emissiveIntensity={0.25}
+            emissiveIntensity={0.12}
           />
         </mesh>
         {/* pin tip */}
@@ -131,10 +131,10 @@ function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) 
           <coneGeometry args={[0.5, 1.15, 48]} />
           <meshStandardMaterial
             color={brand}
-            metalness={0.55}
-            roughness={0.22}
+            metalness={0.35}
+            roughness={0.32}
             emissive={brand}
-            emissiveIntensity={0.25}
+            emissiveIntensity={0.12}
           />
         </mesh>
         {/* inner dot */}
@@ -182,8 +182,8 @@ function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) 
 }
 
 export default function HeroScene() {
-  const brand = useMemo(() => cssColor("--brand", "#ff00b0"), []);
-  const accent = useMemo(() => cssColor("--accent2", "#8b5cf6"), []);
+  const brand = useMemo(() => cssColor("--pin", "#1d4ed8"), []);
+  const accent = useMemo(() => cssColor("--orb", "#2563eb"), []);
 
   return (
     <Canvas
@@ -192,10 +192,10 @@ export default function HeroScene() {
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.7} />
-      <pointLight position={[3, 3, 4]} intensity={40} color={brand} />
-      <pointLight position={[-4, 1, 3]} intensity={30} color={accent} />
-      <directionalLight position={[0, 4, 5]} intensity={1.2} />
+      <ambientLight intensity={0.45} />
+      <pointLight position={[3, 3, 4]} intensity={22} color={brand} />
+      <pointLight position={[-4, 1, 3]} intensity={16} color={accent} />
+      <directionalLight position={[0, 4, 5]} intensity={0.7} />
       <WireShape color={brand} />
       <Particles color={brand} />
       <MapPin brand={brand} accent={accent} />

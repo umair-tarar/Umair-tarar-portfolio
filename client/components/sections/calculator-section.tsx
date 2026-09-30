@@ -128,9 +128,9 @@ export default function CalculatorSection() {
               </select>
             </label>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-2 items-end gap-4">
               <label className="block space-y-2">
-                <span className="text-sm text-white/75">Value of one customer ($)</span>
+                <span className="block text-sm text-white/75">Customer value ($)</span>
                 <input
                   type="number"
                   min={1}
@@ -140,7 +140,7 @@ export default function CalculatorSection() {
                 />
               </label>
               <label className="block space-y-2">
-                <span className="text-sm text-white/75">Contacts that become customers (%)</span>
+                <span className="block text-sm text-white/75" title="Share of contacts that become paying customers">Close rate (%)</span>
                 <input
                   type="number"
                   min={1}
