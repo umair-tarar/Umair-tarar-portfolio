@@ -20,7 +20,7 @@ export const CONTACT = {
   introVideoUrl: "",
   // Get a free access key at web3forms.com (enter your email, the key
   // arrives by email) and paste it here so forms land straight in your inbox.
-  web3formsKey: "",
+  web3formsKey: "699754fc-ce5a-4a04-9329-a102403c9f64",
 };
 
 export const ROTATING_WORDS = [
