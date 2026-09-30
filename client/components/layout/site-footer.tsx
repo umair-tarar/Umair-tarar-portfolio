@@ -1,4 +1,5 @@
 import { type LucideIcon } from "lucide-react";
+import NewsletterForm from "@/components/common/newsletter-form";
 
 type FooterLinkItem = {
   label: string;
@@ -40,7 +41,8 @@ const footerLinks: FooterLinkColumn[] = [
 
 export const SiteFooter = () => (
   <footer className="border-t border-white/10 bg-background/95">
-    <div className="px-6 py-6">
+    <NewsletterForm />
+    <div className="border-t border-white/10 px-6 py-6">
       <div className="mx-auto max-w-6xl text-center">
         <p className="text-xs md:text-sm text-foreground/60">
           © {new Date().getFullYear()}{" "}

@@ -209,6 +209,7 @@
 
   /* Premium card: subtle gradient fill and lift on hover */
   .card-premium {
+    position: relative;
     @apply rounded-2xl border border-white/10 transition-all duration-300;
     background-color: hsl(var(--card) / 0.55);
     background-image: linear-gradient(
@@ -317,6 +318,79 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .bar-fill { transform: none; transition: none; }
+  }
+
+
+  /* mouse-following spotlight on card borders */
+  .card-premium::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(var(--brand) / 0.95),
+      rgb(var(--accent2) / 0.4) 45%,
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .card-premium:hover::after {
+    opacity: 1;
+  }
+
+  /* section divider that draws itself */
+  .section-divider-line {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(var(--brand) / 0.7), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .is-visible .section-divider-line {
+    transform: scaleX(1);
+  }
+  .section-divider-line::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 90px;
+    height: 5px;
+    border-radius: 9999px;
+    background: radial-gradient(closest-side, rgb(var(--brand)), transparent);
+    animation: divider-run 5s linear infinite;
+  }
+  @keyframes divider-run {
+    from { left: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    to { left: calc(100% - 90px); opacity: 0; }
+  }
+
+  /* chat launcher pulse */
+  .chat-fab::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: rgb(var(--brand));
+    opacity: 0.4;
+    z-index: -1;
+    animation: wa-ping 2.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-divider-line { transform: none; transition: none; }
+    .section-divider-line::after, .chat-fab::before { animation: none; }
   }
 
   /* Lenis smooth scroll */

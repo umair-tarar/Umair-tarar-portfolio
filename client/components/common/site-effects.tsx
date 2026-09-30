@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ClipboardCheck, MessageCircle, Phone } from "lucide-react";
 import Lenis from "lenis";
+import ChatWidget from "@/components/common/chat-widget";
 import { CONTACT } from "@/data/site";
 
 declare global {
@@ -40,6 +41,7 @@ export default function SiteEffects() {
     // ---- scroll progress, parallax, back-to-top ----
     let raf = 0;
     const auroras = Array.from(document.querySelectorAll<HTMLElement>(".aurora"));
+    const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
     const onScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
@@ -51,6 +53,17 @@ export default function SiteEffects() {
         if (!reduce) {
           auroras.forEach((el, i) => {
             el.style.translate = `0 ${window.scrollY * (i ? -0.08 : 0.14)}px`;
+          });
+          // Depth: elements drift at their own speed as they cross the screen.
+          parallaxEls.forEach((el) => {
+            const speed = Number(el.dataset.parallax) || 0.06;
+            const prev = Number(el.dataset.py) || 0;
+            const r = el.getBoundingClientRect();
+            if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
+            const center = r.top - prev + r.height / 2 - window.innerHeight / 2;
+            const off = Math.max(-90, Math.min(90, -center * speed));
+            el.dataset.py = String(off);
+            el.style.translate = `0 ${off}px`;
           });
         }
       });
@@ -140,7 +153,7 @@ export default function SiteEffects() {
       />
 
       {/* Desktop floating buttons */}
-      <div className="fixed bottom-5 right-5 z-50 hidden flex-col items-end gap-3 md:flex">
+      <div className="fixed bottom-24 right-5 z-50 hidden flex-col items-end gap-3 md:flex">
         <button
           type="button"
           aria-label="Back to top"
@@ -151,16 +164,9 @@ export default function SiteEffects() {
         >
           <ArrowUp size={18} />
         </button>
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Chat on WhatsApp"
-          className="wa-fab relative flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110"
-        >
-          <MessageCircle size={26} />
-        </a>
       </div>
+
+      <ChatWidget />
 
       {/* Mobile sticky action bar */}
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-background/90 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl md:hidden">

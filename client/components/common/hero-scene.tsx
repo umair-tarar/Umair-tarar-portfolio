@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 /** Reads a space-separated RGB CSS variable (e.g. "255 0 176") as a THREE.Color. */
@@ -74,6 +74,28 @@ function WireShape({ color }: { color: THREE.Color }) {
   );
 }
 
+/** Camera glides toward the mouse so the whole scene feels three-dimensional. */
+function CameraRig() {
+  const { camera } = useThree();
+  const p = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      p.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      p.current.y = (e.clientY / window.innerHeight) * 2 - 1;
+    };
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
+
+  useFrame(() => {
+    camera.position.x += (p.current.x * 1.2 - camera.position.x) * 0.04;
+    camera.position.y += (0.5 - p.current.y * 0.8 - camera.position.y) * 0.04;
+    camera.lookAt(0, 0.3, 0);
+  });
+  return null;
+}
+
 function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) {
   const group = useRef<THREE.Group>(null);
   const rings = useRef<THREE.Mesh[]>([]);
@@ -92,8 +114,8 @@ function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     if (group.current) {
-      group.current.rotation.y = t * 0.6 + pointer.current.x * 0.5;
-      group.current.rotation.x = pointer.current.y * 0.2;
+      group.current.rotation.y = t * 0.6 + pointer.current.x * 0.9;
+      group.current.rotation.x = pointer.current.y * 0.35;
       group.current.position.y = Math.sin(t * 1.4) * 0.12;
     }
     rings.current.forEach((ring, i) => {
@@ -196,6 +218,7 @@ export default function HeroScene() {
       <pointLight position={[3, 3, 4]} intensity={22} color={brand} />
       <pointLight position={[-4, 1, 3]} intensity={16} color={accent} />
       <directionalLight position={[0, 4, 5]} intensity={0.7} />
+      <CameraRig />
       <WireShape color={brand} />
       <Particles color={brand} />
       <MapPin brand={brand} accent={accent} />

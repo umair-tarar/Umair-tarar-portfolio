@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { ROTATING_WORDS } from "@/data/site";
 import { canRender3D } from "@/hooks/use-site-effects";
+import ScrambleText from "@/components/common/scramble-text";
 
 const HeroScene = lazy(() => import("@/components/common/hero-scene"));
 
@@ -62,7 +63,7 @@ const HeroSection = () => {
             style={{ animationDelay: "120ms" }}
             className="hero-in mt-6 text-sm font-semibold uppercase tracking-[0.25em] text-brand"
           >
-            Digital Marketer &amp; Local SEO Specialist
+            <ScrambleText text="Digital Marketer & Local SEO Specialist" delay={350} />
           </p>
 
           <h1
@@ -114,7 +115,7 @@ const HeroSection = () => {
 
         {/* 3D scene + timeline */}
         <div className="space-y-6">
-          <div className="relative mx-auto h-[300px] w-full max-w-md sm:h-[340px]">
+          <div data-parallax="0.05" className="relative mx-auto h-[300px] w-full max-w-md sm:h-[340px]">
             <div className="absolute inset-6 -z-10 rounded-full bg-brand/20 blur-3xl" />
             <div className="hero-orbit" aria-hidden />
             {show3D ? (

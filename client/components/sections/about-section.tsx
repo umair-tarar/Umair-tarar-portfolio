@@ -58,7 +58,7 @@ export default function AboutSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
           {/* Photo */}
-          <div className="reveal tilt relative mx-auto w-full max-w-sm">
+          <div data-parallax="0.07" className="reveal tilt relative mx-auto w-full max-w-sm">
             <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-brand/25 blur-3xl" />
             <div className="rounded-[2rem] bg-gradient-to-br from-brand via-accent2/60 to-brand-dark p-[2px] shadow-glow-lg">
               <div className="relative overflow-hidden rounded-[calc(2rem-2px)] bg-background">
