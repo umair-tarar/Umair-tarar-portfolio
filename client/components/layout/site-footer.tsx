@@ -17,11 +17,11 @@ const footerLinks: FooterLinkColumn[] = [
   {
     title: "Services",
     items: [
+      { label: "Local SEO", href: "/#services" },
       { label: "Social Media Marketing", href: "/#services" },
       { label: "Meta Ads", href: "/#services" },
       { label: "On-page SEO", href: "/#services" },
       { label: "Off-page SEO", href: "/#services" },
-      { label: "Local SEO", href: "/#services" },
       { label: "WordPress", href: "/#services" },
     ],
   },

@@ -13,14 +13,16 @@ export function HashScroll() {
       const t = setTimeout(() => {
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -90 });
+          else el.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }, 0);
       return () => clearTimeout(t);
     }
 
     // If no hash, scroll to top on pathname changes for smooth page transitions
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__lenis) window.__lenis.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.hash, location.pathname]);
 
   return null;

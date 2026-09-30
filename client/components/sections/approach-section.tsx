@@ -51,7 +51,7 @@ export const ApproachSection = () => {
           {stages.map((stage, index) => (
             <article
               key={stage.title}
-              className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-inner shadow-black/20 transition duration-300 hover:border-accent/50 hover:bg-accent/5 h-full flex flex-col"
+              className="card-premium reveal tilt flex h-full flex-col rounded-3xl p-6"
             >
               <div className="flex-1">
                 <div className="space-y-2">

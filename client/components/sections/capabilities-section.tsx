@@ -11,6 +11,17 @@ import {
 
 const capabilities = [
   {
+    title: "Local SEO",
+    description:
+      "Google Business Profile optimization, local citations, reviews and geo-targeted pages to win Google Maps and local searches.",
+    icon: MapPin,
+    highlights: [
+      "GBP optimization",
+      "Local citations & NAP cleanup",
+      "Review & reputation strategy",
+    ],
+  },
+  {
     title: "Social Media Marketing",
     description:
       "Content strategy, community management, and feed-to-funnel creative that drives engagement and conversions.",
@@ -35,9 +46,9 @@ const capabilities = [
   {
     title: "On-page SEO",
     description:
-      "Technical audits, schema, meta optimization, and content tuning to improve SERP visibility.",
+      "Technical audits, schema, meta optimization, and service and location pages that improve SERP visibility.",
     icon: Search,
-    highlights: ["Technical SEO", "Schema markup", "Content optimization"],
+    highlights: ["Technical SEO", "Schema markup", "Service & location pages"],
   },
   {
     title: "Off-page SEO",
@@ -45,13 +56,6 @@ const capabilities = [
       "Link-building strategies, outreach, and PR-driven authority building to increase domain strength.",
     icon: Link,
     highlights: ["Link acquisition", "Digital PR", "Content amplification"],
-  },
-  {
-    title: "Local SEO",
-    description:
-      "Google Business Profile optimization, local citations, and geo-targeted content to win local searches.",
-    icon: MapPin,
-    highlights: ["GBP optimization", "Local citations", "Localized content"],
   },
   {
     title: "WordPress",
@@ -80,12 +84,12 @@ export const CapabilitiesSection = () => {
               Offerings
             </span>
             <h2 className="text-3xl font-semibold text-foreground sm:text-4xl">
-              Everything your growth squad needs, plugged into one crew.
+              Local SEO and digital marketing, plugged into one crew.
             </h2>
             <p className="max-w-xl text-sm text-foreground/70">
-              From the first spark to scaled performance, I embed with your team
-              to deliver conversion-obsessed strategy, unmistakable creative,
-              and systemized execution.
+              From getting found on Google Maps to turning visitors into
+              customers, I embed with your team to deliver conversion-obsessed
+              strategy, unmistakable creative, and systemized execution.
             </p>
           </div>
           <div className="rounded-3xl border border-primary/30 bg-primary/10 p-6 text-sm text-primary-foreground shadow-inner shadow-primary/30">
@@ -105,7 +109,7 @@ export const CapabilitiesSection = () => {
             return (
               <article
                 key={capability.title}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 transition duration-300 hover:border-primary/50 hover:bg-primary/5"
+                className="card-premium reveal tilt group relative overflow-hidden rounded-3xl p-8"
               >
                 <div className="absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-primary/30 blur-3xl transition duration-300 group-hover:opacity-100" />
                 <div className="relative space-y-6">

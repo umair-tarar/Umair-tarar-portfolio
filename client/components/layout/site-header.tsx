@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 const navigation = [
   { href: "/", label: "Home" },
   { href: "/#services", label: "Services" },
-  { href: "#work", label: "Work" },
+  { href: "/#work", label: "Work" },
+  { href: "/#pricing", label: "Pricing" },
   { href: "/#approach", label: "Approach" },
-  { href: "/#clients", label: "Clients" },
   { href: "/#testimonials", label: "Testimonials" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/#book", label: "Contact" },
 ];
 
 export const SiteHeader = () => {
@@ -25,7 +26,8 @@ export const SiteHeader = () => {
       const id = href.split("#")[1];
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.__lenis) window.__lenis.scrollTo(el, { offset: -90 });
+        else el.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
         // update URL and attempt to scroll after brief delay
         window.history.pushState(
@@ -35,11 +37,15 @@ export const SiteHeader = () => {
         );
         setTimeout(() => {
           const el2 = document.getElementById(id);
-          if (el2) el2.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (el2) {
+            if (window.__lenis) window.__lenis.scrollTo(el2, { offset: -90 });
+            else el2.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
         }, 150);
       }
       if (label === "Home") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (window.__lenis) window.__lenis.scrollTo(0);
+        else window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   };
@@ -50,7 +56,11 @@ export const SiteHeader = () => {
         <Link
           to="/"
           className="text-lg font-semibold tracking-wide text-white"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() =>
+            window.__lenis
+              ? window.__lenis.scrollTo(0)
+              : window.scrollTo({ top: 0, behavior: "smooth" })
+          }
         >
           M.Umair
         </Link>
@@ -68,11 +78,11 @@ export const SiteHeader = () => {
         </nav>
         <div className="flex items-center gap-3">
           <Link
-            to="/#contact"
+            to="/#book"
             className="hidden rounded-3xl bg-gradient-to-br from-primary/60 to-primary/40 px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition transform hover:-translate-y-0.5 md:inline-flex"
-            onClick={(e) => handleNavClick(e, "/#contact")}
+            onClick={(e) => handleNavClick(e, "/#book")}
           >
-            Book a call
+            Free Audit
           </Link>
           <button
             type="button"
@@ -129,14 +139,14 @@ export const SiteHeader = () => {
               ))}
 
               <Link
-                to="/#contact"
+                to="/#book"
                 className="block mt-2 rounded-3xl bg-primary px-4 py-2 text-center font-semibold text-primary-foreground shadow-lg shadow-primary/30"
                 onClick={(e) => {
-                  handleNavClick(e, "/#contact");
+                  handleNavClick(e, "/#book");
                   setIsMenuOpen(false);
                 }}
               >
-                Book a call
+                Free Audit
               </Link>
             </div>
           </nav>
