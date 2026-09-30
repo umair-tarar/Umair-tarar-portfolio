@@ -6,10 +6,10 @@
 export const CONTACT = {
   name: "Muhammad Umair Tarar",
   email: "tararu810@gmail.com",
-  phone: "+92 346 0202186",
-  phoneHref: "tel:+923460202186",
+  phone: "+92 311 6302186",
+  phoneHref: "tel:+923116302186",
   // WhatsApp number with country code, no + or spaces.
-  whatsapp: "923460202186",
+  whatsapp: "923116302186",
   linkedin: "https://www.linkedin.com/in/muhammad-umair-tarar/",
   // Paste your Calendly / Cal.com link to show a live booking calendar
   // (example: "https://calendly.com/your-name/30min"). Leave empty to show
@@ -118,7 +118,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Starter",
         blurb: "Get your Google presence right. Profile and listings only.",
-        price: 149,
+        price: 125,
         unit: "/month",
         meta: "Setup in 5 days",
         groups: [
@@ -144,7 +144,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Growth",
         blurb: "Adds on-page SEO and content. For contested cities.",
-        price: 299,
+        price: 300,
         unit: "/month",
         meta: "Setup in 3 days",
         featured: true,
@@ -178,7 +178,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Authority",
         blurb: "Full local SEO management. I run the whole thing for you.",
-        price: 499,
+        price: 550,
         unit: "/month",
         meta: "Priority support",
         premium: true,
@@ -220,7 +220,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Essentials",
         blurb: "Consistent social presence that supports your local SEO.",
-        price: 199,
+        price: 180,
         unit: "/month",
         meta: "Setup in 5 days",
         groups: [
@@ -242,7 +242,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Growth",
         blurb: "Social media plus Meta Ads to bring in leads.",
-        price: 399,
+        price: 350,
         unit: "/month",
         meta: "Setup in 3 days",
         featured: true,
@@ -271,7 +271,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Scale",
         blurb: "Full-funnel marketing with local SEO built in.",
-        price: 699,
+        price: 700,
         unit: "/month",
         meta: "Priority support",
         premium: true,
@@ -306,7 +306,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Local SEO Audit",
         blurb: "A clear picture of where you stand and what to fix first.",
-        price: 69,
+        price: 65,
         unit: " one-time",
         meta: "Delivered in 3 days",
         groups: [
@@ -324,7 +324,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "GBP Setup & Optimization",
         blurb: "A complete, optimized profile that is ready to rank.",
-        price: 129,
+        price: 150,
         unit: " one-time",
         meta: "Delivered in 5 days",
         featured: true,
@@ -346,7 +346,7 @@ export const PRICING: PlanTab[] = [
       {
         name: "Local Presence Launch",
         blurb: "Everything a new local business needs to get found.",
-        price: 299,
+        price: 300,
         unit: " one-time",
         meta: "Delivered in 10 days",
         premium: true,

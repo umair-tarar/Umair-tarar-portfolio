@@ -26,7 +26,7 @@ export const CtaSection = () => {
               </p>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://wa.me/9323116302186"
+                  href="https://wa.me/923116302186"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp"
