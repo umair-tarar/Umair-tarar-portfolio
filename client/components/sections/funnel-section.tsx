@@ -100,7 +100,7 @@ function FunnelVisual() {
   useEffect(() => setOk3D(canRender3D()), []);
   if (!ok3D) return <FunnelGraphic />;
   return (
-    <InView className="min-h-[460px]" fallback={<FunnelGraphic />}>
+    <InView className="min-h-[500px]" fallback={<FunnelGraphic />}>
       <Suspense fallback={<FunnelGraphic />}>
         <Funnel3D />
       </Suspense>

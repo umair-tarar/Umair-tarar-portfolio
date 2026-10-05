@@ -8,7 +8,8 @@ const TOP = 2.4;
 const STEP = 1.2;
 const H = 1.14;
 const RADII = [2.25, 1.8, 1.38, 0.96, 0.56]; // boundaries between layers
-const COLORS = ["#1E3A8A", "#2554C7", "#2F6BF0", "#4F9BFF"];
+const COLORS = ["#1B2F8A", "#2147B8", "#2563EB", "#3B82F6"];
+const SHIFT = 0.3; // whole funnel sits slightly higher to leave room for the caption
 const LABELS = ["Awareness", "Consideration", "Decision", "Action"];
 
 function radiusAt(y: number) {
@@ -56,7 +57,7 @@ function Flow({ color }: { color: THREE.Color }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color={color} size={0.1} sizeAttenuation transparent opacity={0.95} depthWrite={false} />
+      <pointsMaterial color="#DFF1FF" size={0.2} sizeAttenuation transparent opacity={1} depthWrite={false} />
     </points>
   );
 }
@@ -76,7 +77,7 @@ function FunnelMesh() {
 
   return (
     <>
-      <group ref={group} rotation={[0.28, 0, 0]}>
+      <group ref={group} position={[0, SHIFT, 0]} rotation={[0.28, 0, 0]}>
         {LABELS.map((_, i) => {
           const y = TOP - i * STEP - STEP / 2 + 0.03;
           return (
@@ -86,27 +87,31 @@ function FunnelMesh() {
                 <meshStandardMaterial
                   color={COLORS[i]}
                   emissive={COLORS[i]}
-                  emissiveIntensity={0.35}
+                  emissiveIntensity={0.55}
                   transparent
-                  opacity={0.42}
+                  opacity={0.5}
                   side={THREE.DoubleSide}
                   roughness={0.35}
                   metalness={0.3}
                 />
               </mesh>
-              <mesh>
-                <cylinderGeometry args={[RADII[i] * 1.002, RADII[i + 1] * 1.002, H, 24, 1, true]} />
-                <meshBasicMaterial color={light} wireframe transparent opacity={0.16} />
-              </mesh>
+              <lineSegments>
+                <edgesGeometry args={[new THREE.CylinderGeometry(RADII[i] * 1.003, RADII[i + 1] * 1.003, H, 20, 1, true), 10]} />
+                <lineBasicMaterial color={light} transparent opacity={i === 3 ? 0.5 : 0.38} />
+              </lineSegments>
             </group>
           );
         })}
         <Flow color={light} />
       </group>
       {/* glow at the exit */}
-      <mesh ref={glow} position={[0, -TOP - 0.55, 0]}>
-        <sphereGeometry args={[0.34, 24, 24]} />
-        <meshBasicMaterial color="#9ED0FF" transparent opacity={0.85} />
+      <mesh position={[0, -TOP + SHIFT - 0.38, 0]}>
+        <sphereGeometry args={[0.5, 24, 24]} />
+        <meshBasicMaterial color="#22D3EE" transparent opacity={0.22} depthWrite={false} />
+      </mesh>
+      <mesh ref={glow} position={[0, -TOP + SHIFT - 0.38, 0]}>
+        <sphereGeometry args={[0.2, 24, 24]} />
+        <meshBasicMaterial color="#67E8F9" transparent opacity={0.95} depthWrite={false} />
       </mesh>
     </>
   );
@@ -115,7 +120,7 @@ function FunnelMesh() {
 /** 3D funnel with particles flowing from "Awareness" down to "Action". */
 export default function Funnel3D() {
   return (
-    <div className="relative mx-auto h-[460px] w-full max-w-md">
+    <div className="relative mx-auto h-[500px] w-full max-w-md">
       <Canvas
         orthographic
         dpr={[1, 1.6]}
@@ -130,8 +135,8 @@ export default function Funnel3D() {
 
       {/* labels sit over each layer */}
       {LABELS.map((label, i) => {
-        const yc = TOP - i * STEP - STEP / 2;
-        const top = ((3.05 - yc) / 6.1) * 100;
+        const yc = TOP - i * STEP - STEP / 2 + SHIFT;
+        const top = ((3.29 - yc) / 6.58) * 100;
         return (
           <div
             key={label}
