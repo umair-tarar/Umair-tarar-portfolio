@@ -156,7 +156,7 @@ export default function CalculatorSection() {
           </div>
 
           {/* result */}
-          <div className="glass reveal relative overflow-hidden rounded-3xl p-6 sm:p-8">
+          <div className="panel reveal relative overflow-hidden p-6 sm:p-8">
             <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand/25 blur-3xl" />
             <div className="relative">
               <div className="flex items-center gap-3 text-white">

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, ClipboardCheck, MessageCircle, Phone } from "lucide-react";
+import { ArrowUp, ClipboardCheck, Phone } from "lucide-react";
+import { WhatsAppIcon } from "@/components/common/brand-icons";
 import Lenis from "lenis";
 import ChatWidget from "@/components/common/chat-widget";
 import { CONTACT } from "@/data/site";
@@ -183,7 +184,7 @@ export default function SiteEffects() {
             rel="noreferrer"
             className="flex flex-col items-center gap-1 rounded-2xl border border-white/10 bg-white/5 py-2 text-white"
           >
-            <MessageCircle size={18} className="text-[#25D366]" /> WhatsApp
+            <WhatsAppIcon className="h-[18px] w-[18px]" /> WhatsApp
           </a>
           <button
             type="button"

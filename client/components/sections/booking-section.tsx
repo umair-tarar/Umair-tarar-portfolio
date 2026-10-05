@@ -1,4 +1,5 @@
-import { CalendarCheck, ClipboardCheck, MessageCircle } from "lucide-react";
+import { CalendarCheck, ClipboardCheck } from "lucide-react";
+import { WhatsAppMark } from "@/components/common/brand-icons";
 import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/common/contact-form";
 import SectionHeading from "@/components/common/section-heading";
@@ -75,7 +76,7 @@ export default function BookingSection() {
                   className="magnetic btn-shimmer w-full rounded-full bg-[#25D366] text-white hover:bg-[#1fb958]"
                 >
                   <a href={waLink} target="_blank" rel="noreferrer">
-                    <MessageCircle className="mr-2" size={18} />
+                    <WhatsAppMark className="mr-2 h-5 w-5" />
                     Book on WhatsApp
                   </a>
                 </Button>
@@ -83,7 +84,7 @@ export default function BookingSection() {
             )}
           </div>
 
-          <div className="glass reveal rounded-3xl p-6 sm:p-8">
+          <div className="panel reveal p-6 sm:p-8">
             <ContactForm />
           </div>
         </div>

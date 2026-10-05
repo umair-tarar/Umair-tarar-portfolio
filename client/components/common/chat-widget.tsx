@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { MessageCircle, Send, X } from "lucide-react";
+import { Send, X } from "lucide-react";
+import { ChatBotIcon } from "@/components/common/brand-icons";
 import { CONTACT } from "@/data/site";
 import { deliverLead } from "@/lib/deliver-lead";
 
@@ -231,7 +232,7 @@ export default function ChatWidget() {
         className="chat-fab fixed bottom-24 right-3 z-[71] flex h-14 w-14 items-center justify-center rounded-full bg-brand text-brand-foreground shadow-glow-lg transition-transform hover:scale-110 md:bottom-5 md:right-5"
         style={open ? { display: "none" } : undefined}
       >
-        <MessageCircle size={26} />
+        <ChatBotIcon className="h-8 w-8 text-white drop-shadow" />
       </button>
     </>
   );

@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
-import { Mail, MessageCircle, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
+import { WhatsAppMark } from "@/components/common/brand-icons";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/data/site";
@@ -96,7 +97,7 @@ export default function ContactForm() {
           className="w-full rounded-full border-white/20 bg-transparent text-white"
         >
           <a href={whatsapp} target="_blank" rel="noreferrer">
-            <MessageCircle className="mr-2" size={16} /> Send on WhatsApp
+            <WhatsAppMark className="mr-2 h-4 w-4 text-[#25D366]" /> Send on WhatsApp
           </a>
         </Button>
         <button
