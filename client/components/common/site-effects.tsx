@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUp, ClipboardCheck, Phone } from "lucide-react";
 import { WhatsAppIcon } from "@/components/common/brand-icons";
+import { startAnimatedFavicon } from "@/lib/animated-favicon";
 import Lenis from "lenis";
 import ChatWidget from "@/components/common/chat-widget";
 import { CONTACT } from "@/data/site";
@@ -25,6 +26,8 @@ export default function SiteEffects() {
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const stopFavicon = startAnimatedFavicon();
 
     // ---- smooth scrolling ----
     let lenis: Lenis | null = null;
@@ -120,6 +123,7 @@ export default function SiteEffects() {
       document.documentElement.removeEventListener("pointerleave", onLeave);
       if (raf) cancelAnimationFrame(raf);
       if (lenisRaf) cancelAnimationFrame(lenisRaf);
+      stopFavicon();
       lenis?.destroy();
       delete window.__lenis;
     };
