@@ -3,6 +3,7 @@ import SiteFooter from "./site-footer";
 import SiteHeader from "./site-header";
 import SiteEffects from "@/components/common/site-effects";
 import Preloader from "@/components/common/preloader";
+import ParticleNetwork from "@/components/common/particle-network";
 
 interface SiteLayoutProps {
   children: ReactNode;
@@ -17,6 +18,7 @@ export const SiteLayout = ({ children }: SiteLayoutProps) => {
         <div className="absolute bottom-[-10rem] left-[-8rem] h-[20rem] w-[20rem] rounded-full bg-secondary/30 blur-[130px]" />
       </div>
       <Preloader />
+      <ParticleNetwork />
       <SiteEffects />
       <SiteHeader />
       <main className="flex-1 pb-20 md:pb-0">{children}</main>

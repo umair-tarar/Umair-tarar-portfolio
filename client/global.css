@@ -405,6 +405,61 @@
     .section-divider-line::after, .chat-fab::before { animation: none; }
   }
 
+  /* custom cursor ring */
+  .cursor-ring {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border: 1.5px solid rgb(var(--brand) / 0.75);
+    border-radius: 9999px;
+    transition:
+      width 0.25s ease,
+      height 0.25s ease,
+      margin 0.25s ease,
+      background-color 0.25s ease,
+      opacity 0.3s ease;
+    will-change: transform;
+  }
+  .cursor-ring.is-active {
+    width: 62px;
+    height: 62px;
+    margin: -31px 0 0 -31px;
+    background-color: rgb(var(--brand) / 0.14);
+  }
+
+  /* animated success tick */
+  .check-circle {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    animation: draw-stroke 0.7s ease forwards;
+  }
+  .check-tick {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: draw-stroke 0.45s 0.55s ease forwards;
+  }
+  @keyframes draw-stroke {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* terminal caret */
+  .terminal-caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: rgb(var(--brand-light));
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink {
+    50% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .check-circle, .check-tick { animation: none; stroke-dashoffset: 0; }
+    .terminal-caret { animation: none; }
+  }
+
   /* Lenis smooth scroll */
   html.lenis,
   html.lenis body {

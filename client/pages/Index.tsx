@@ -14,6 +14,10 @@ import FaqSection from "@/components/sections/faq-section";
 import BookingSection from "@/components/sections/booking-section";
 import CtaSection from "@/components/sections/cta-section";
 import SectionDivider from "@/components/common/section-divider";
+import WorldSection from "@/components/sections/world-section";
+import MapPackDemo from "@/components/sections/map-pack-demo";
+import TerminalSection from "@/components/sections/terminal-section";
+import BeforeAfterSection from "@/components/sections/before-after-section";
 import { SiteLayout } from "@/components/layout/site-layout";
 import { useCardTilt, useScrollReveal } from "@/hooks/use-site-effects";
 
@@ -31,9 +35,13 @@ export default function Index() {
       <ProblemSection />
       <SectionDivider />
       <FunnelSection />
+      <MapPackDemo />
+      <TerminalSection />
       <WorkSection />
+      <BeforeAfterSection />
       <PricingSection />
       <SectionDivider />
+      <WorldSection />
       <ApproachSection />
       <TestimonialsSection />
       <CalculatorSection />

@@ -21,6 +21,7 @@ declare global {
 export default function SiteEffects() {
   const bar = useRef<HTMLDivElement>(null);
   const glow = useRef<HTMLDivElement>(null);
+  const ring = useRef<HTMLDivElement>(null);
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
@@ -80,7 +81,26 @@ export default function SiteEffects() {
     const resetMag = (el: HTMLElement | null) => {
       if (el) el.style.transform = "";
     };
+    // custom cursor ring (eased follow, grows over links and buttons)
+    const target = { x: -100, y: -100 };
+    const cur = { x: -100, y: -100 };
+    let ringRaf = 0;
+    const ringLoop = () => {
+      cur.x += (target.x - cur.x) * 0.2;
+      cur.y += (target.y - cur.y) * 0.2;
+      if (ring.current) ring.current.style.transform = `translate3d(${cur.x}px, ${cur.y}px, 0)`;
+      ringRaf = requestAnimationFrame(ringLoop);
+    };
     const onMove = (e: PointerEvent) => {
+      target.x = e.clientX;
+      target.y = e.clientY;
+      if (ring.current) {
+        ring.current.style.opacity = "1";
+        const interactive = (e.target as HTMLElement | null)?.closest?.(
+          "a, button, input, textarea, select, [role=button], [data-cursor]",
+        );
+        ring.current.classList.toggle("is-active", !!interactive);
+      }
       if (glow.current) {
         glow.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
         glow.current.style.opacity = "1";
@@ -109,10 +129,12 @@ export default function SiteEffects() {
     };
     const onLeave = () => {
       if (glow.current) glow.current.style.opacity = "0";
+      if (ring.current) ring.current.style.opacity = "0";
       resetMag(active);
       active = null;
     };
     if (fine && !reduce) {
+      ringRaf = requestAnimationFrame(ringLoop);
       window.addEventListener("pointermove", onMove, { passive: true });
       document.documentElement.addEventListener("pointerleave", onLeave);
     }
@@ -123,6 +145,7 @@ export default function SiteEffects() {
       document.documentElement.removeEventListener("pointerleave", onLeave);
       if (raf) cancelAnimationFrame(raf);
       if (lenisRaf) cancelAnimationFrame(lenisRaf);
+      if (ringRaf) cancelAnimationFrame(ringRaf);
       stopFavicon();
       lenis?.destroy();
       delete window.__lenis;
@@ -150,6 +173,11 @@ export default function SiteEffects() {
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[80] h-[3px] w-full origin-left scale-x-0 bg-gradient-to-r from-brand via-brand-light to-accent2"
         ref={bar}
+      />
+      <div
+        aria-hidden
+        ref={ring}
+        className="cursor-ring pointer-events-none fixed left-0 top-0 z-[85] opacity-0"
       />
       <div
         aria-hidden

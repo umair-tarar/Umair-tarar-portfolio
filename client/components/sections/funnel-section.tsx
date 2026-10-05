@@ -1,4 +1,9 @@
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Check } from "lucide-react";
+import InView from "@/components/common/in-view";
+import { canRender3D } from "@/hooks/use-site-effects";
+
+const Funnel3D = lazy(() => import("@/components/common/funnel-3d"));
 import SectionHeading from "@/components/common/section-heading";
 import { FUNNEL_STAGES } from "@/data/site";
 
@@ -90,6 +95,19 @@ function FunnelGraphic() {
   );
 }
 
+function FunnelVisual() {
+  const [ok3D, setOk3D] = useState(false);
+  useEffect(() => setOk3D(canRender3D()), []);
+  if (!ok3D) return <FunnelGraphic />;
+  return (
+    <InView className="min-h-[460px]" fallback={<FunnelGraphic />}>
+      <Suspense fallback={<FunnelGraphic />}>
+        <Funnel3D />
+      </Suspense>
+    </InView>
+  );
+}
+
 export default function Funnel() {
   return (
     <section id="funnel" className="border-t border-white/10 py-24">
@@ -107,7 +125,7 @@ export default function Funnel() {
 
         <div className="mt-16 grid items-center gap-12 lg:grid-cols-2">
           <div className="reveal">
-            <FunnelGraphic />
+            <FunnelVisual />
           </div>
 
           <div className="space-y-5">

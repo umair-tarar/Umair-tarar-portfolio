@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Resume from "./pages/Resume";
 import NotFound from "./pages/NotFound";
 import { HashScroll } from "@/components/common/hash-scroll";
+import PageTransition from "@/components/common/page-transition";
 
 const queryClient = new QueryClient();
 
@@ -20,12 +21,16 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <HashScroll />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/resume" element={<Resume />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <PageTransition>
+          {(location) => (
+            <Routes location={location}>
+              <Route path="/" element={<Index />} />
+              <Route path="/resume" element={<Resume />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          )}
+        </PageTransition>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

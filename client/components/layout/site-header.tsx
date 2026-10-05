@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -15,6 +15,27 @@ const navigation = [
 
 export const SiteHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [active, setActive] = useState("");
+
+  useEffect(() => {
+    const ids = navigation
+      .map((n) => n.href.split("#")[1])
+      .filter(Boolean) as string[];
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (!els.length || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   const handleNavClick = (
     e: React.MouseEvent,
@@ -69,7 +90,9 @@ export const SiteHeader = () => {
             <Link
               key={item.href}
               to={item.href.startsWith("#") ? `/${item.href}` : item.href}
-              className="rounded-3xl px-4 py-2 transition-colors duration-200 hover:bg-white/5 hover:text-foreground"
+              className={`rounded-3xl px-4 py-2 transition-colors duration-200 hover:bg-white/5 hover:text-foreground ${
+                item.href.split("#")[1] === active ? "bg-white/10 text-foreground" : ""
+              }`}
               onClick={(e) => handleNavClick(e, item.href, item.label)}
             >
               {item.label}

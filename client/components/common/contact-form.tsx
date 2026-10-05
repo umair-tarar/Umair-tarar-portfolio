@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Mail, Send } from "lucide-react";
 import { WhatsAppMark } from "@/components/common/brand-icons";
+import AnimatedCheck from "@/components/common/animated-check";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { CONTACT } from "@/data/site";
@@ -47,9 +48,7 @@ export default function ContactForm() {
   if (sent) {
     return (
       <div className="flex min-h-[20rem] flex-col items-center justify-center gap-3 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/15 text-2xl text-brand">
-          ✓
-        </div>
+        <AnimatedCheck className="h-16 w-16" />
         <h3 className="text-xl font-bold text-white">Request received</h3>
         <p className="max-w-xs text-sm text-white/65">
           Thank you! I will review your details and reply within 24 hours.

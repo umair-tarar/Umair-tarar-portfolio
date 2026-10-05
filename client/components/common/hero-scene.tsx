@@ -114,7 +114,7 @@ function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     if (group.current) {
-      group.current.rotation.y = t * 0.6 + pointer.current.x * 0.9;
+      group.current.rotation.y = t * 0.6 + pointer.current.x * 0.9 + window.scrollY * 0.004;
       group.current.rotation.x = pointer.current.y * 0.35;
       group.current.position.y = Math.sin(t * 1.4) * 0.12;
     }

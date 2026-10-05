@@ -418,3 +418,10 @@ export const CALCULATOR = {
   defaultValue: 100,
   defaultCloseRate: 30,
 };
+
+/**
+ * Before / after comparisons. Add real screenshots here to show the slider
+ * section (it stays hidden while this list is empty). Example:
+ * { title: "Google Business Profile insights", before: "/results/before.png", after: "/results/after.png" }
+ */
+export const BEFORE_AFTER: { title: string; before: string; after: string }[] = [];
