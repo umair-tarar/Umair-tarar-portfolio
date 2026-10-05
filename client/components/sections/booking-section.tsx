@@ -1,4 +1,4 @@
-import { CalendarCheck, ClipboardCheck } from "lucide-react";
+import { CalendarCheck, CalendarClock, ClipboardCheck } from "lucide-react";
 import { WhatsAppMark } from "@/components/common/brand-icons";
 import { Button } from "@/components/ui/button";
 import ContactForm from "@/components/common/contact-form";
@@ -32,6 +32,7 @@ export default function BookingSection() {
           hire me or not.
         </p>
 
+        {/* WhatsApp + request form */}
         <div className="mt-14 grid gap-8 lg:grid-cols-2">
           <div className="card-premium reveal p-6 sm:p-8">
             <div className="flex items-center gap-3 text-white">
@@ -41,53 +42,68 @@ export default function BookingSection() {
               <h3 className="text-xl font-bold">Pick a time that suits you</h3>
             </div>
 
-            {CONTACT.bookingUrl ? (
-              <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white">
-                <iframe
-                  title="Book a call"
-                  src={`${CONTACT.bookingUrl}${CONTACT.bookingUrl.includes("?") ? "&" : "?"}hide_gdpr_banner=1&primary_color=3b82f6`}
-                  className="h-[640px] w-full"
-                  loading="lazy"
-                />
-              </div>
-            ) : (
-              <div className="mt-6 space-y-4">
-                <p className="text-sm leading-relaxed text-white/65">
-                  Send the short form and I will reply with available times,
-                  or message me directly and we will fix a slot together.
-                </p>
-                <ul className="space-y-3">
-                  {AUDIT_ITEMS.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm text-white/80"
-                    >
-                      <ClipboardCheck
-                        size={18}
-                        className="mt-0.5 shrink-0 text-brand"
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  asChild
-                  size="lg"
-                  className="magnetic btn-shimmer w-full rounded-full bg-[#25D366] text-white hover:bg-[#1fb958]"
-                >
-                  <a href={waLink} target="_blank" rel="noreferrer">
-                    <WhatsAppMark className="mr-2 h-5 w-5" />
-                    Book on WhatsApp
-                  </a>
-                </Button>
-              </div>
-            )}
+            <div className="mt-6 space-y-4">
+              <p className="text-sm leading-relaxed text-white/65">
+                Send the short form and I will reply with available times, or
+                message me directly and we will fix a slot together.
+              </p>
+              <ul className="space-y-3">
+                {AUDIT_ITEMS.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm text-white/80"
+                  >
+                    <ClipboardCheck
+                      size={18}
+                      className="mt-0.5 shrink-0 text-brand"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Button
+                asChild
+                size="lg"
+                className="magnetic btn-shimmer w-full rounded-full bg-[#25D366] text-white hover:bg-[#1fb958]"
+              >
+                <a href={waLink} target="_blank" rel="noreferrer">
+                  <WhatsAppMark className="mr-2 h-5 w-5" />
+                  Book on WhatsApp
+                </a>
+              </Button>
+            </div>
           </div>
 
           <div className="panel reveal p-6 sm:p-8">
             <ContactForm />
           </div>
         </div>
+
+        {/* Calendly booking calendar */}
+        {CONTACT.bookingUrl && (
+          <div className="panel reveal mt-8 p-6 sm:p-8">
+            <div className="flex items-center gap-3 text-white">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/15">
+                <CalendarClock className="text-brand" size={22} />
+              </span>
+              <div>
+                <h3 className="text-xl font-bold">Or choose a time on my calendar</h3>
+                <p className="text-sm text-white/55">
+                  Pick a day and time, and you will get an invite right away.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white">
+              <iframe
+                title="Book a call on Calendly"
+                src={`${CONTACT.bookingUrl}${CONTACT.bookingUrl.includes("?") ? "&" : "?"}hide_gdpr_banner=1&primary_color=3b82f6`}
+                className="h-[700px] w-full"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
