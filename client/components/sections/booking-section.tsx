@@ -45,7 +45,7 @@ export default function BookingSection() {
               <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white">
                 <iframe
                   title="Book a call"
-                  src={CONTACT.bookingUrl}
+                  src={`${CONTACT.bookingUrl}${CONTACT.bookingUrl.includes("?") ? "&" : "?"}hide_gdpr_banner=1&primary_color=3b82f6`}
                   className="h-[640px] w-full"
                   loading="lazy"
                 />

@@ -14,7 +14,7 @@ export const CONTACT = {
   // Paste your Calendly / Cal.com link to show a live booking calendar
   // (example: "https://calendly.com/your-name/30min"). Leave empty to show
   // the request form and WhatsApp instead.
-  bookingUrl: "",
+  bookingUrl: "https://calendly.com/tararu810/30min",
   // Paste a YouTube / Loom / Vimeo link (or an .mp4 file link) to show an
   // "Watch my intro" button in the About section. Leave empty to hide it.
   introVideoUrl: "",
