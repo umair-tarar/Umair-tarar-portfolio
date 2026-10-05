@@ -118,12 +118,13 @@ function FunnelMesh() {
 }
 
 /** 3D funnel with particles flowing from "Awareness" down to "Action". */
-export default function Funnel3D() {
+export default function Funnel3D({ active = true }: { active?: boolean }) {
   return (
     <div className="relative mx-auto h-[500px] w-full max-w-md">
       <Canvas
         orthographic
-        dpr={[1, 1.6]}
+        frameloop={active ? "always" : "never"}
+        dpr={[1, 1.3]}
         camera={{ zoom: 76, position: [0, 0, 12] }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}

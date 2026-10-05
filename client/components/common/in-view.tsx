@@ -1,38 +1,53 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 /**
- * Renders its children only while it is near the screen. Used for 3D scenes
- * so that off-screen WebGL canvases are not running and slowing the page.
+ * Mounts heavy content (3D scenes) a long way before it scrolls into view, so
+ * it is ready by the time you get there, and then only reports whether it is
+ * on screen (`active`) so the content can pause itself when it is not.
  */
 export default function InView({
   children,
   fallback = null,
-  rootMargin = "250px",
+  preload = "1500px",
   className,
 }: {
-  children: ReactNode;
+  children: ReactNode | ((active: boolean) => ReactNode);
   fallback?: ReactNode;
-  rootMargin?: string;
+  preload?: string;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
+      setMounted(true);
+      setActive(true);
       return;
     }
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { rootMargin });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [rootMargin]);
+    const near = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) setMounted(true);
+      },
+      { rootMargin: preload },
+    );
+    const onScreen = new IntersectionObserver(([e]) => setActive(e.isIntersecting), {
+      rootMargin: "80px",
+    });
+    near.observe(el);
+    onScreen.observe(el);
+    return () => {
+      near.disconnect();
+      onScreen.disconnect();
+    };
+  }, [preload]);
 
   return (
     <div ref={ref} className={className}>
-      {visible ? children : fallback}
+      {mounted ? (typeof children === "function" ? children(active) : children) : fallback}
     </div>
   );
 }

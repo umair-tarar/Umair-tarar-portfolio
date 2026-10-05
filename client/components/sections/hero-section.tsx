@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   MapPin,
@@ -36,7 +36,16 @@ const CHIPS = [
 
 const HeroSection = () => {
   const [show3D, setShow3D] = useState(false);
+  const [heroActive, setHeroActive] = useState(true);
+  const sceneBox = useRef<HTMLDivElement>(null);
   useEffect(() => setShow3D(canRender3D()), []);
+  useEffect(() => {
+    const el = sceneBox.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setHeroActive(e.isIntersecting), { rootMargin: "80px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <section id="top" className="relative isolate overflow-hidden">
@@ -115,13 +124,13 @@ const HeroSection = () => {
 
         {/* 3D scene + timeline */}
         <div className="space-y-6">
-          <div data-parallax="0.05" className="relative mx-auto h-[300px] w-full max-w-md sm:h-[340px]">
+          <div ref={sceneBox} data-parallax="0.05" className="relative mx-auto h-[300px] w-full max-w-md sm:h-[340px]">
             <div className="absolute inset-6 -z-10 rounded-full bg-brand/20 blur-3xl" />
             <div className="hero-orbit" aria-hidden />
             {show3D ? (
               <div className="absolute inset-0">
                 <Suspense fallback={null}>
-                  <HeroScene />
+                  <HeroScene active={heroActive} />
                 </Suspense>
               </div>
             ) : (

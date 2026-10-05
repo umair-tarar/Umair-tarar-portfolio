@@ -75,11 +75,12 @@ function Scene({ rank }: { rank: number }) {
 }
 
 /** 3D podium for the top three Map Pack spots. `rank` is the business position. */
-export default function PodiumScene({ rank }: { rank: number }) {
+export default function PodiumScene({ rank, active = true }: { rank: number; active?: boolean }) {
   return (
     <div className="relative h-[340px] w-full">
       <Canvas
-        dpr={[1, 1.6]}
+        frameloop={active ? "always" : "never"}
+        dpr={[1, 1.3]}
         camera={{ position: [0, 3.2, 10.8], fov: 36 }}
         onCreated={({ camera }) => camera.lookAt(0, 1.2, 0)}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}

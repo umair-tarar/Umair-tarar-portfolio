@@ -145,7 +145,7 @@
   }
 
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply border border-white/10 bg-white/[0.07];
   }
 
   .glass-nav {
@@ -613,9 +613,7 @@
       rgb(var(--accent2) / 0.05) 45%,
       transparent 70%
     );
-    mix-blend-mode: screen;
-    transition: opacity 0.4s ease;
-    will-change: transform;
+    display: none; /* disabled: too costly while scrolling */
   }
 
   .magnetic {

@@ -67,3 +67,24 @@ export function canRender3D() {
     return false;
   }
 }
+
+/** Loads the 3D scenes in the background so they are ready before you scroll to them. */
+export function usePrefetch3D() {
+  useEffect(() => {
+    if (!canRender3D()) return;
+    const timers: number[] = [];
+    const run = () => {
+      const loaders = [
+        () => import("@/components/common/funnel-3d"),
+        () => import("@/components/common/globe-scene"),
+        () => import("@/components/common/podium-scene"),
+      ];
+      loaders.forEach((load, i) => timers.push(window.setTimeout(() => void load(), i * 900)));
+    };
+    const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number })
+      .requestIdleCallback;
+    if (ric) ric(run, { timeout: 4000 });
+    else timers.push(window.setTimeout(run, 2500));
+    return () => timers.forEach(clearTimeout);
+  }, []);
+}

@@ -34,7 +34,7 @@ export default function ParticleNetwork() {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.min(70, Math.round((w * h) / 26000));
+      const count = Math.min(42, Math.round((w * h) / 42000));
       pts = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -58,9 +58,11 @@ export default function ParticleNetwork() {
     let raf = 0;
     const LINK = 125;
     const MOUSE_LINK = 170;
-    const frame = () => {
+    let lastDraw = 0;
+    const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
-      if (document.hidden) return;
+      if (document.hidden || now - lastDraw < 32) return; // ~30 fps is plenty
+      lastDraw = now;
       ctx.clearRect(0, 0, w, h);
       for (const p of pts) {
         p.x += p.vx;

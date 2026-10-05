@@ -6,7 +6,17 @@ import { canRender3D } from "@/hooks/use-site-effects";
 
 const GlobeScene = lazy(() => import("@/components/common/globe-scene"));
 
-const MARKETS = ["United Kingdom", "United States", "UAE", "Canada", "Australia"];
+const MARKETS = [
+  "United Kingdom",
+  "France",
+  "Spain",
+  "Italy",
+  "UAE (Dubai)",
+  "Singapore",
+  "United States",
+  "Canada",
+  "Australia",
+];
 
 export default function WorldSection() {
   const [ok3D, setOk3D] = useState(false);
@@ -49,9 +59,11 @@ export default function WorldSection() {
           <div className="absolute inset-10 -z-10 rounded-full bg-brand/20 blur-3xl" />
           {ok3D ? (
             <InView className="h-full w-full">
-              <Suspense fallback={null}>
-                <GlobeScene />
-              </Suspense>
+              {(active) => (
+                <Suspense fallback={null}>
+                  <GlobeScene active={active} />
+                </Suspense>
+              )}
             </InView>
           ) : (
             <div className="flex h-full items-center justify-center">

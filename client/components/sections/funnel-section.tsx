@@ -101,9 +101,11 @@ function FunnelVisual() {
   if (!ok3D) return <FunnelGraphic />;
   return (
     <InView className="min-h-[500px]" fallback={<FunnelGraphic />}>
-      <Suspense fallback={<FunnelGraphic />}>
-        <Funnel3D />
-      </Suspense>
+      {(active) => (
+        <Suspense fallback={<FunnelGraphic />}>
+          <Funnel3D active={active} />
+        </Suspense>
+      )}
     </InView>
   );
 }

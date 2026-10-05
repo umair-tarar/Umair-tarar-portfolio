@@ -168,9 +168,11 @@ export default function MapPackDemo() {
             <div className="panel reveal overflow-hidden px-2 pt-2">
               {ok3D ? (
                 <InView className="h-[340px]">
-                  <Suspense fallback={null}>
-                    <PodiumScene rank={rank} />
-                  </Suspense>
+                  {(active) => (
+                    <Suspense fallback={null}>
+                      <PodiumScene rank={rank} active={active} />
+                    </Suspense>
+                  )}
                 </InView>
               ) : (
                 <p className="p-6 text-center text-sm text-white/55">

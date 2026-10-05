@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -17,8 +17,13 @@ export default function ServicesCarousel({ items }: { items: CarouselItem[] }) {
   const n = items.length;
   const step = 360 / n;
   const radius = 430;
-  const [angle, setAngle] = useState(0);
   const angleRef = useRef(0);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const apply = () => {
+    if (ringRef.current) {
+      ringRef.current.style.transform = `translateZ(-${radius}px) rotateY(${angleRef.current}deg)`;
+    }
+  };
   const paused = useRef(false);
   const drag = useRef<{ x: number; start: number } | null>(null);
 
@@ -31,7 +36,7 @@ export default function ServicesCarousel({ items }: { items: CarouselItem[] }) {
       last = now;
       if (!reduce && !paused.current && !drag.current) {
         angleRef.current -= dt * 0.006;
-        setAngle(angleRef.current);
+        apply();
       }
       raf = requestAnimationFrame(loop);
     };
@@ -41,7 +46,7 @@ export default function ServicesCarousel({ items }: { items: CarouselItem[] }) {
 
   const rotateBy = (deg: number) => {
     angleRef.current += deg;
-    setAngle(angleRef.current);
+    apply();
   };
 
   return (
@@ -60,16 +65,17 @@ export default function ServicesCarousel({ items }: { items: CarouselItem[] }) {
         onPointerMove={(e) => {
           if (!drag.current) return;
           angleRef.current = drag.current.start + (e.clientX - drag.current.x) * 0.25;
-          setAngle(angleRef.current);
+          apply();
         }}
         onPointerUp={() => (drag.current = null)}
         onPointerCancel={() => (drag.current = null)}
       >
         <div
+          ref={ringRef}
           className="absolute left-1/2 top-1/2 h-0 w-0"
           style={{
             transformStyle: "preserve-3d",
-            transform: `translateZ(-${radius}px) rotateY(${angle}deg)`,
+            transform: `translateZ(-${radius}px) rotateY(0deg)`,
           }}
         >
           {items.map((item, i) => {

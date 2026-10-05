@@ -203,13 +203,14 @@ function MapPin({ brand, accent }: { brand: THREE.Color; accent: THREE.Color }) 
   );
 }
 
-export default function HeroScene() {
+export default function HeroScene({ active = true }: { active?: boolean }) {
   const brand = useMemo(() => cssColor("--pin", "#1d4ed8"), []);
   const accent = useMemo(() => cssColor("--orb", "#2563eb"), []);
 
   return (
     <Canvas
-      dpr={[1, 1.5]}
+      frameloop={active ? "always" : "never"}
+      dpr={[1, 1.4]}
       camera={{ position: [0, 0.5, 6.2], fov: 38 }}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
       style={{ background: "transparent" }}

@@ -19,11 +19,12 @@ import MapPackDemo from "@/components/sections/map-pack-demo";
 import TerminalSection from "@/components/sections/terminal-section";
 import BeforeAfterSection from "@/components/sections/before-after-section";
 import { SiteLayout } from "@/components/layout/site-layout";
-import { useCardTilt, useScrollReveal } from "@/hooks/use-site-effects";
+import { useCardTilt, usePrefetch3D, useScrollReveal } from "@/hooks/use-site-effects";
 
 export default function Index() {
   useScrollReveal();
   useCardTilt();
+  usePrefetch3D();
 
   return (
     <SiteLayout>

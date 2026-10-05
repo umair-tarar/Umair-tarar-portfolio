@@ -5,15 +5,19 @@ import { cssColor } from "@/lib/three-colors";
 
 const R = 1.6;
 
-type Place = { name: string; lat: number; lon: number; home?: boolean };
+type Place = { name: string; label?: string; lat: number; lon: number; home?: boolean; dx?: number; dy?: number };
 
 // Faisalabad is the home base; the other countries are the markets served.
 const HOME: Place = { name: "Pakistan", lat: 31.4, lon: 73.1, home: true };
 const MARKETS: Place[] = [
-  { name: "United Kingdom", lat: 54.0, lon: -2.5 },
+  { name: "United Kingdom", lat: 54.0, lon: -2.5, dx: -34, dy: -14 },
+  { name: "France", lat: 46.6, lon: 2.3, dx: -62, dy: 8 },
+  { name: "Spain", lat: 40.2, lon: -3.6, dx: -44, dy: 34 },
+  { name: "Italy", lat: 42.8, lon: 12.5, dx: 46, dy: 30 },
   { name: "USA", lat: 39.5, lon: -98.0 },
   { name: "Canada", lat: 56.5, lon: -100.0 },
-  { name: "UAE", lat: 24.3, lon: 54.4 },
+  { name: "UAE", label: "Dubai · UAE", lat: 24.3, lon: 54.4, dx: -30, dy: 26 },
+  { name: "Singapore", lat: 1.35, lon: 103.8 },
   { name: "Australia", lat: -25.5, lon: 134.0 },
 ];
 const PLACES = [HOME, ...MARKETS];
@@ -27,6 +31,9 @@ function latLon(lat: number, lon: number, r: number) {
     r * Math.sin(phi) * Math.sin(theta),
   );
 }
+
+// start fetching the Earth texture as soon as this module is loaded
+useLoader.preload(THREE.TextureLoader, "/earth.webp");
 
 export type DragState = { active: boolean; vel: number; pending: number };
 
@@ -133,7 +140,7 @@ function Earth({
       tmp.project(cam);
       const x = (tmp.x * 0.5 + 0.5) * w;
       const y = (-tmp.y * 0.5 + 0.5) * h;
-      el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -135%)`;
+      el.style.transform = `translate(${x + (PLACES[i].dx ?? 0)}px, ${y + (PLACES[i].dy ?? 0)}px) translate(-50%, -135%)`;
       el.style.opacity = facing ? "1" : "0";
     });
   });
@@ -198,7 +205,7 @@ function Atmosphere() {
   );
 }
 
-export default function GlobeScene() {
+export default function GlobeScene({ active = true }: { active?: boolean }) {
   const drag = useRef<DragState>({ active: false, vel: 0, pending: 0 });
   const last = useRef<{ x: number } | null>(null);
   const labels = useRef<(HTMLDivElement | null)[]>([]);
@@ -228,7 +235,8 @@ export default function GlobeScene() {
       }}
     >
       <Canvas
-        dpr={[1, 1.6]}
+        frameloop={active ? "always" : "never"}
+        dpr={[1, 1.4]}
         camera={{ position: [0, 0, 6.4], fov: 38 }}
         gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
         style={{ background: "transparent" }}
@@ -250,14 +258,14 @@ export default function GlobeScene() {
             className="absolute left-0 top-0 whitespace-nowrap opacity-0 transition-opacity duration-300"
           >
             <span
-              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-bold shadow-lg ${
+              className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-bold shadow-lg ${
                 p.home
                   ? "border-white/70 bg-white text-[#0A1030]"
                   : "border-sky-300/60 bg-[#0A1030]/85 text-sky-100"
               }`}
             >
               <span className={`h-1.5 w-1.5 rounded-full ${p.home ? "bg-[#2563EB]" : "bg-sky-300"}`} />
-              {p.home ? "Pakistan · Home" : p.name}
+              {p.home ? "Pakistan · Home" : p.label ?? p.name}
             </span>
           </div>
         ))}
