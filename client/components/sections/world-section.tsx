@@ -80,7 +80,7 @@ export default function WorldSection() {
       </div>
 
       {/* 3D space: fills the whole section on large screens, sits below the text on phones */}
-      <div className="relative mx-auto mt-10 h-[420px] w-full max-w-lg sm:h-[460px] lg:absolute lg:inset-0 lg:z-0 lg:mt-0 lg:h-auto lg:max-w-none">
+      <div className="relative mx-auto mt-10 h-[420px] w-full max-w-lg sm:h-[460px] lg:absolute lg:inset-0 lg:z-0 lg:mt-0 lg:h-auto lg:max-w-none [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_16%,#000_84%,transparent)] [mask-image:linear-gradient(to_bottom,transparent,#000_16%,#000_84%,transparent)]">
         <div className="reveal h-full w-full">
           {ok3D ? (
             <InView className="h-full w-full">

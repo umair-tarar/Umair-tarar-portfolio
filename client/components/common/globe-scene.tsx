@@ -82,7 +82,7 @@ function Earth({
         .clone()
         .add(end)
         .normalize()
-        .multiplyScalar(R * (1.32 + home.distanceTo(end) * 0.09));
+        .multiplyScalar(R * (1.16 + home.distanceTo(end) * 0.04));
       return new THREE.QuadraticBezierCurve3(home, mid, end).getPoints(70);
     });
     const lines = arcs.map(
@@ -371,9 +371,12 @@ function Orbits() {
 function GlobeRig({ children }: { children: ReactNode }) {
   const size = useThree((s) => s.size);
   const aspect = size.width / size.height;
-  const x = aspect > 1.35 ? Math.min(3.3, 1.08 * aspect) : 0;
+  const wide = size.width >= 1024; // the canvas fills the whole section only on large screens
+  const x = wide ? Math.min(3.6, 0.97 * aspect) : 0;
+  // keep the planet a medium size whatever the screen height is
+  const s = wide ? Math.min(0.85, Math.max(0.4, 440 / size.height)) : 1;
   return (
-    <group position={[x, 0, 0]} scale={aspect > 1.35 ? 0.8 : 1}>
+    <group position={[x, 0, 0]} scale={s}>
       {children}
     </group>
   );
