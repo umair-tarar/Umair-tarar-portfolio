@@ -70,8 +70,6 @@ const capabilities = [
   },
 ];
 
-import ServicesCarousel from "@/components/common/services-carousel";
-
 export const CapabilitiesSection = () => {
   return (
     <section
@@ -105,10 +103,7 @@ export const CapabilitiesSection = () => {
             </p>
           </div>
         </div>
-        <div className="mt-16">
-          <ServicesCarousel items={capabilities} />
-        </div>
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:hidden">
+        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {capabilities.map((capability) => {
             const Icon = capability.icon;
             return (
