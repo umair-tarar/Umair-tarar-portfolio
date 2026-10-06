@@ -66,7 +66,7 @@ export default function AboutSection() {
                   src="/umair.webp"
                   alt="Muhammad Umair Tarar, Digital Marketer and Local SEO Specialist"
                   className="aspect-[4/5] w-full object-cover object-top"
-                  loading="lazy"
+                  loading="lazy" decoding="async"
                 />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-background/80 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-5">

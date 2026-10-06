@@ -61,6 +61,13 @@ export function canRender3D() {
   try {
     if (new URLSearchParams(location.search).has("no3d")) return false;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+    if (!new URLSearchParams(location.search).has("force3d")) {
+      // phones and low-power devices get light fallbacks instead of 3D scenes
+      const nav = navigator as Navigator & { deviceMemory?: number };
+      const small = window.matchMedia("(max-width: 767px)").matches;
+      const lowPower = (nav.hardwareConcurrency ?? 8) <= 3 || (nav.deviceMemory ?? 8) <= 2;
+      if (small || lowPower) return false;
+    }
     const canvas = document.createElement("canvas");
     return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
   } catch {

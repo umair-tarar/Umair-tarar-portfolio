@@ -101,7 +101,7 @@ export const WorkSection = () => {
                               src={imageSrc}
                               alt={`${p.title} performance insight chart ${index + 1}`}
                               className="w-full h-full object-contain rounded-xl transition duration-200"
-                              loading="lazy"
+                              loading="lazy" decoding="async"
                               draggable={false}
                             />
                           </div>

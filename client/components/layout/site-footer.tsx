@@ -40,7 +40,8 @@ const footerLinks: FooterLinkColumn[] = [
 ];
 
 export const SiteFooter = () => (
-  <footer className="border-t border-white/10 bg-background/95">
+  <footer className="relative border-t border-white/10 bg-background/95">
+    <div aria-hidden className="footer-glow" />
     <NewsletterForm />
     <div className="border-t border-white/10 px-6 py-6">
       <div className="mx-auto max-w-6xl text-center">

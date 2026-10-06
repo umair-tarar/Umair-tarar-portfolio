@@ -22,6 +22,7 @@ export default function SiteEffects() {
   const bar = useRef<HTMLDivElement>(null);
   const glow = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
+  const topRing = useRef<SVGCircleElement>(null);
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function SiteEffects() {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const p = max > 0 ? window.scrollY / max : 0;
         if (bar.current) bar.current.style.transform = `scaleX(${p})`;
+        if (topRing.current) topRing.current.style.strokeDashoffset = String(125.66 * (1 - p));
         setShowTop(window.scrollY > 700);
         if (!reduce) {
           auroras.forEach((el, i) => {
@@ -191,11 +193,26 @@ export default function SiteEffects() {
           type="button"
           aria-label="Back to top"
           onClick={goTop}
-          className={`glass flex h-11 w-11 items-center justify-center rounded-full text-white shadow-glow transition-all duration-300 hover:border-brand hover:text-brand ${
+          className={`glass relative flex h-11 w-11 items-center justify-center rounded-full text-white shadow-glow transition-all duration-300 hover:border-brand hover:text-brand ${
             showTop ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
           }`}
         >
-          <ArrowUp size={18} />
+          <svg viewBox="0 0 44 44" className="absolute inset-0 -rotate-90" aria-hidden>
+            <circle cx="22" cy="22" r="20" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="2" />
+            <circle
+              ref={topRing}
+              cx="22"
+              cy="22"
+              r="20"
+              fill="none"
+              stroke="rgb(var(--brand))"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeDasharray="125.66"
+              strokeDashoffset="125.66"
+            />
+          </svg>
+          <ArrowUp size={18} className="relative" />
         </button>
       </div>
 

@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Mail, MousePointerClick, Target, TrendingUp } from "lucide-react";
 import {
   FacebookIcon,
@@ -8,6 +7,7 @@ import {
   WhatsAppIcon,
 } from "@/components/common/brand-icons";
 import { CONTACT } from "@/data/site";
+import CountUp from "@/components/common/count-up";
 
 const SOCIALS = [
   {
@@ -42,61 +42,6 @@ const HIGHLIGHTS = [
   { label: "ROAS", icon: Target, to: 2.4, prefix: "", suffix: "x", decimals: 1, width: 60 },
   { label: "CTR", icon: MousePointerClick, to: 12, prefix: "+", suffix: "%", decimals: 0, width: 45 },
 ];
-
-function CountUp({
-  to,
-  decimals = 0,
-  prefix = "",
-  suffix = "",
-}: {
-  to: number;
-  decimals?: number;
-  prefix?: string;
-  suffix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const [v, setV] = useState(0);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      typeof IntersectionObserver === "undefined"
-    ) {
-      setV(to);
-      return;
-    }
-    let raf = 0;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect();
-        const start = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min(1, (now - start) / 1400);
-          setV(to * (1 - Math.pow(1 - p, 3)));
-          if (p < 1) raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-      },
-      { threshold: 0.4 },
-    );
-    io.observe(el);
-    return () => {
-      io.disconnect();
-      cancelAnimationFrame(raf);
-    };
-  }, [to]);
-
-  return (
-    <span ref={ref}>
-      {prefix}
-      {v.toFixed(decimals)}
-      {suffix}
-    </span>
-  );
-}
 
 export const CtaSection = () => {
   return (

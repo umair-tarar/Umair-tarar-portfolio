@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
-import { Globe2, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import SectionHeading from "@/components/common/section-heading";
+import CountUp from "@/components/common/count-up";
 import InView from "@/components/common/in-view";
 import { canRender3D } from "@/hooks/use-site-effects";
 
@@ -16,6 +17,13 @@ const MARKETS = [
   "United States",
   "Canada",
   "Australia",
+];
+
+const STATS = [
+  { to: 9, suffix: "", label: "Markets served remotely" },
+  { to: 6, suffix: "", label: "Core services" },
+  { to: 30, suffix: " min", label: "Free audit call" },
+  { to: 24, suffix: " hr", label: "Typical reply time" },
 ];
 
 export default function WorldSection() {
@@ -53,6 +61,16 @@ export default function WorldSection() {
               </span>
             ))}
           </div>
+          <div className="reveal mt-8 grid max-w-md grid-cols-2 gap-3">
+            {STATS.map((s) => (
+              <div key={s.label} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                <p className="font-display text-3xl font-bold text-white">
+                  <CountUp to={s.to} suffix={s.suffix} />
+                </p>
+                <p className="mt-0.5 text-xs text-white/50">{s.label}</p>
+              </div>
+            ))}
+          </div>
           <p className="reveal mt-4 text-xs text-foreground/45">
             Drag the globe to rotate it.
           </p>
@@ -74,7 +92,16 @@ export default function WorldSection() {
             </InView>
           ) : (
             <div className="flex h-full items-center justify-center">
-              <Globe2 className="animate-float text-brand" size={150} strokeWidth={1} />
+              <div
+                aria-label="Map of the world centred on Pakistan"
+                className="h-60 w-60 animate-float rounded-full shadow-glow-lg"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.18), transparent 45%), radial-gradient(circle, transparent 55%, rgba(2,6,30,0.75) 100%), url(/earth.webp)",
+                  backgroundSize: "100% 100%, 100% 100%, 320% 160%",
+                  backgroundPosition: "0 0, 0 0, 79% 5%",
+                }}
+              />
             </div>
           )}
         </div>

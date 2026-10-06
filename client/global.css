@@ -1,5 +1,4 @@
-/** @import must precede all other statements */
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap");
+/* Fonts are loaded from index.html (preconnect + stylesheet link). */
 
 @tailwind base;
 @tailwind components;
@@ -458,6 +457,59 @@
   @media (prefers-reduced-motion: reduce) {
     .check-circle, .check-tick { animation: none; stroke-dashoffset: 0; }
     .terminal-caret { animation: none; }
+  }
+
+  /* press feel on buttons and main call-to-action links */
+  button:not(:disabled):active,
+  a.magnetic:active,
+  a.btn-shimmer:active {
+    scale: 0.96;
+  }
+  .magnetic {
+    transition:
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      scale 0.15s ease;
+  }
+  .btn-shimmer:hover {
+    filter: brightness(1.07);
+  }
+
+  /* heading underline: draws in, then a soft shine sweeps across */
+  .heading-rule {
+    position: relative;
+    overflow: hidden;
+  }
+  .heading-rule::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.95), transparent);
+    transform: translateX(-100%);
+    animation: rule-shine 4.8s ease-in-out 2s infinite;
+  }
+  @keyframes rule-shine {
+    0%, 55% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* longer stagger for bigger grids */
+  .grid > .reveal:nth-child(4) { --reveal-delay: 300ms; }
+  .grid > .reveal:nth-child(5) { --reveal-delay: 400ms; }
+  .grid > .reveal:nth-child(6) { --reveal-delay: 500ms; }
+
+  /* footer glow */
+  .footer-glow {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 9rem;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 100% at 50% 0%, rgb(var(--brand) / 0.16), transparent 70%),
+      linear-gradient(90deg, transparent, rgb(var(--brand) / 0.7), transparent) top / 100% 1px no-repeat;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .heading-rule::after { animation: none; }
   }
 
   /* Lenis smooth scroll */

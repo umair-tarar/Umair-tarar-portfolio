@@ -9,6 +9,7 @@ import PricingSection from "@/components/sections/pricing-section";
 import ApproachSection from "@/components/sections/approach-section";
 import TestimonialsSection from "@/components/sections/testimonials-section";
 import CalculatorSection from "@/components/sections/calculator-section";
+import ToolsSection from "@/components/sections/tools-section";
 import ChecklistSection from "@/components/sections/checklist-section";
 import FaqSection from "@/components/sections/faq-section";
 import BookingSection from "@/components/sections/booking-section";
@@ -46,6 +47,7 @@ export default function Index() {
       <ApproachSection />
       <TestimonialsSection />
       <CalculatorSection />
+      <ToolsSection />
       <ChecklistSection />
       <FaqSection />
       <BookingSection />
