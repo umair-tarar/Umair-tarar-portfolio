@@ -23,9 +23,12 @@ export default function WorldSection() {
   useEffect(() => setOk3D(canRender3D()), []);
 
   return (
-    <section id="world" className="relative overflow-hidden py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2">
-        <div>
+    <section
+      id="world"
+      className="relative overflow-hidden bg-[radial-gradient(ellipse_at_72%_50%,rgba(37,99,235,0.22),transparent_62%)] py-24 lg:min-h-[680px]"
+    >
+      <div className="pointer-events-none relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-6 lg:min-h-[520px] lg:grid-cols-2">
+        <div className="pointer-events-auto">
           <SectionHeading
             eyebrow="Remote &amp; Worldwide"
             title="Based in Faisalabad. Working with businesses worldwide."
@@ -55,8 +58,12 @@ export default function WorldSection() {
           </p>
         </div>
 
-        <div className="reveal relative mx-auto h-[380px] w-full max-w-lg sm:h-[440px]">
-          <div className="absolute inset-10 -z-10 rounded-full bg-brand/20 blur-3xl" />
+        <div className="hidden lg:block" aria-hidden />
+      </div>
+
+      {/* 3D space: fills the whole section on large screens, sits below the text on phones */}
+      <div className="relative mx-auto mt-10 h-[420px] w-full max-w-lg sm:h-[460px] lg:absolute lg:inset-0 lg:z-0 lg:mt-0 lg:h-auto lg:max-w-none">
+        <div className="reveal h-full w-full">
           {ok3D ? (
             <InView className="h-full w-full">
               {(active) => (

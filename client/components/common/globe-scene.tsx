@@ -1,5 +1,5 @@
-import { MutableRefObject, Suspense, useMemo, useRef } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { MutableRefObject, ReactNode, Suspense, useEffect, useMemo, useRef } from "react";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { cssColor } from "@/lib/three-colors";
 
@@ -195,6 +195,210 @@ function Earth({
   );
 }
 
+
+function randomShell(count: number, rMin: number, rMax: number) {
+  const arr = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r = rMin + Math.random() * (rMax - rMin);
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(2 * Math.random() - 1);
+    arr[i * 3] = r * Math.sin(ph) * Math.cos(th);
+    arr[i * 3 + 1] = r * Math.sin(ph) * Math.sin(th) * 0.8;
+    arr[i * 3 + 2] = r * Math.cos(ph) - 6;
+  }
+  return arr;
+}
+
+function glowTexture(color: string) {
+  const c = document.createElement("canvas");
+  c.width = c.height = 128;
+  const ctx = c.getContext("2d")!;
+  const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  g.addColorStop(0, color);
+  g.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(c);
+}
+
+function ShootingStar({ seed }: { seed: number }) {
+  const ref = useRef<THREE.Mesh>(null);
+  const st = useRef({ next: 1.5 + seed * 2.6, dur: 1.1, x: -4, y: 2 });
+  useFrame((state) => {
+    const m = ref.current;
+    if (!m) return;
+    const t = state.clock.elapsedTime;
+    const s = st.current;
+    const p = (t - s.next) / s.dur;
+    if (p < 0) {
+      m.visible = false;
+      return;
+    }
+    if (p > 1) {
+      s.next = t + 3 + Math.random() * 5;
+      s.x = Math.random() * 9 - 7;
+      s.y = 1.2 + Math.random() * 3;
+      m.visible = false;
+      return;
+    }
+    m.visible = true;
+    m.position.set(s.x + p * 5, s.y - p * 2.4, -3);
+    (m.material as THREE.MeshBasicMaterial).opacity = Math.sin(p * Math.PI) * 0.9;
+  });
+  return (
+    <mesh ref={ref} rotation={[0, 0, -0.45]} visible={false}>
+      <planeGeometry args={[1.7, 0.025]} />
+      <meshBasicMaterial color="#cfe8ff" transparent opacity={0} blending={THREE.AdditiveBlending} depthWrite={false} />
+    </mesh>
+  );
+}
+
+/** Deep-space backdrop: drifting star layers, soft nebula glows, shooting stars. */
+function Space() {
+  const s1 = useRef<THREE.Points>(null);
+  const s2 = useRef<THREE.Points>(null);
+  const neb = useRef<(THREE.Sprite | null)[]>([]);
+  const pos1 = useMemo(() => randomShell(520, 9, 24), []);
+  const pos2 = useMemo(() => randomShell(240, 7, 18), []);
+  const nebulae = useMemo(
+    () => [
+      { tex: glowTexture("rgba(56,120,255,0.95)"), p: [-5.5, 2.2, -9], s: 15 },
+      { tex: glowTexture("rgba(125,85,255,0.85)"), p: [6.5, -2.4, -10], s: 17 },
+      { tex: glowTexture("rgba(30,205,255,0.8)"), p: [1, 3.6, -11], s: 13 },
+    ],
+    [],
+  );
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (s1.current) {
+      s1.current.rotation.y = t * 0.012;
+      s1.current.rotation.x = t * 0.004;
+      (s1.current.material as THREE.PointsMaterial).opacity = 0.7 + 0.25 * Math.sin(t * 1.7);
+    }
+    if (s2.current) {
+      s2.current.rotation.y = -t * 0.02;
+      (s2.current.material as THREE.PointsMaterial).opacity = 0.55 + 0.35 * Math.sin(t * 2.3 + 1);
+    }
+    neb.current.forEach((sp, i) => {
+      if (!sp) return;
+      sp.position.x = nebulae[i].p[0] + Math.sin(t * 0.08 + i * 2) * 0.9;
+      sp.position.y = nebulae[i].p[1] + Math.cos(t * 0.06 + i) * 0.5;
+    });
+  });
+
+  return (
+    <>
+      {nebulae.map((n, i) => (
+        <sprite
+          key={i}
+          ref={(el) => (neb.current[i] = el)}
+          position={n.p as [number, number, number]}
+          scale={[n.s, n.s, 1]}
+        >
+          <spriteMaterial map={n.tex} transparent opacity={0.32} blending={THREE.AdditiveBlending} depthWrite={false} />
+        </sprite>
+      ))}
+      <points ref={s1}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[pos1, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color="#BFD8FF" size={0.05} sizeAttenuation transparent opacity={0.8} depthWrite={false} />
+      </points>
+      <points ref={s2}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[pos2, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color="#7DD3FC" size={0.085} sizeAttenuation transparent opacity={0.7} depthWrite={false} />
+      </points>
+      <ShootingStar seed={0} />
+      <ShootingStar seed={1} />
+    </>
+  );
+}
+
+/** Tilted orbit rings with satellites circling the planet. */
+function Orbits() {
+  const g1 = useRef<THREE.Group>(null);
+  const g2 = useRef<THREE.Group>(null);
+  const a = useRef<THREE.Mesh>(null);
+  const b = useRef<THREE.Mesh>(null);
+  const c = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    const t = state.clock.elapsedTime;
+    if (g1.current) g1.current.rotation.y = t * 0.12;
+    if (g2.current) g2.current.rotation.y = -t * 0.09;
+    const a1 = t * 0.75;
+    a.current?.position.set(Math.cos(a1) * 2.55, 0, Math.sin(a1) * 2.55);
+    const a2 = t * 0.5 + 2;
+    b.current?.position.set(Math.cos(a2) * 2.95, 0, Math.sin(a2) * 2.95);
+    const a3 = t * 0.5 + 5;
+    c.current?.position.set(Math.cos(a3) * 2.95, 0, Math.sin(a3) * 2.95);
+  });
+
+  return (
+    <>
+      <group ref={g1} rotation={[1.15, 0, 0.35]}>
+        <mesh>
+          <torusGeometry args={[2.55, 0.007, 8, 180]} />
+          <meshBasicMaterial color="#7DB0FF" transparent opacity={0.5} />
+        </mesh>
+        <mesh ref={a}>
+          <sphereGeometry args={[0.06, 14, 14]} />
+          <meshBasicMaterial color="#ffffff" />
+        </mesh>
+      </group>
+      <group ref={g2} rotation={[0.55, 0, -0.5]}>
+        <mesh>
+          <torusGeometry args={[2.95, 0.005, 8, 180]} />
+          <meshBasicMaterial color="#38BDF8" transparent opacity={0.35} />
+        </mesh>
+        <mesh ref={b}>
+          <sphereGeometry args={[0.045, 14, 14]} />
+          <meshBasicMaterial color="#9ED0FF" />
+        </mesh>
+        <mesh ref={c}>
+          <sphereGeometry args={[0.04, 14, 14]} />
+          <meshBasicMaterial color="#C4B5FD" />
+        </mesh>
+      </group>
+    </>
+  );
+}
+
+/** Moves the globe to the right on wide screens so text can sit on the left. */
+function GlobeRig({ children }: { children: ReactNode }) {
+  const size = useThree((s) => s.size);
+  const aspect = size.width / size.height;
+  const x = aspect > 1.35 ? Math.min(3.3, 1.08 * aspect) : 0;
+  return (
+    <group position={[x, 0, 0]} scale={aspect > 1.35 ? 0.8 : 1}>
+      {children}
+    </group>
+  );
+}
+
+/** Camera drifts slightly with the mouse for depth. */
+function ParallaxCamera() {
+  const { camera } = useThree();
+  const p = useRef({ x: 0, y: 0 });
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      p.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      p.current.y = (e.clientY / window.innerHeight) * 2 - 1;
+    };
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
+  useFrame(() => {
+    camera.position.x += (p.current.x * 0.7 - camera.position.x) * 0.03;
+    camera.position.y += (-p.current.y * 0.4 - camera.position.y) * 0.03;
+    camera.lookAt(0, 0, 0);
+  });
+  return null;
+}
+
 function Atmosphere() {
   const mat = useMemo(atmosphereMaterial, []);
   return (
@@ -243,9 +447,14 @@ export default function GlobeScene({ active = true }: { active?: boolean }) {
       >
         <ambientLight intensity={0.8} />
         <pointLight position={[4, 3, 6]} intensity={30} color="#9CC7FF" />
+        <ParallaxCamera />
+        <Space />
         <Suspense fallback={null}>
-          <Atmosphere />
-          <Earth drag={drag} labels={labels} />
+          <GlobeRig>
+            <Atmosphere />
+            <Orbits />
+            <Earth drag={drag} labels={labels} />
+          </GlobeRig>
         </Suspense>
       </Canvas>
 
