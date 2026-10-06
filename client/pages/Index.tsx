@@ -8,6 +8,7 @@ import WorkSection from "@/components/sections/work-section";
 import PricingSection from "@/components/sections/pricing-section";
 import ApproachSection from "@/components/sections/approach-section";
 import TestimonialsSection from "@/components/sections/testimonials-section";
+import RecommendationsSection from "@/components/sections/recommendations-section";
 import CalculatorSection from "@/components/sections/calculator-section";
 import ToolsSection from "@/components/sections/tools-section";
 import ChecklistSection from "@/components/sections/checklist-section";
@@ -45,6 +46,7 @@ export default function Index() {
       <SectionDivider />
       <WorldSection />
       <ApproachSection />
+      <RecommendationsSection />
       <TestimonialsSection />
       <CalculatorSection />
       <ToolsSection />
