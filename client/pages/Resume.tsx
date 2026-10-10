@@ -140,14 +140,14 @@ export default function Resume() {
                   Muhammad Umair Tarar
                 </h1>
                 <p className="mt-2 text-base sm:text-lg text-foreground/70">
-                  Social Media Marketer
+                  Digital Marketer &amp; Local SEO Specialist
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-foreground/80">
                   <a
-                    href="tel:+923460202186"
+                    href="tel:+923116302186"
                     className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1"
                   >
-                    <Phone className="h-4 w-4" /> +92 346 0202186
+                    <Phone className="h-4 w-4" /> +92 311 6302186
                   </a>
                   <a
                     href="mailto:tararu810@gmail.com"
