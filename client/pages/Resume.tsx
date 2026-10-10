@@ -213,10 +213,43 @@ export default function Resume() {
                   <article>
                     <header className="flex flex-wrap items-baseline gap-2">
                       <h3 className="text-base md:text-lg font-semibold">
+                        Pakistan Software Export Board (PSEB)
+                      </h3>
+                      <span className="text-xs text-foreground/60">
+                        2025 – 2026
+                      </span>
+                    </header>
+                    <p className="mt-1 text-sm text-foreground/80">
+                      Digital Media Marketing Intern – 6-month internship
+                    </p>
+                    <ul className="mt-3 list-inside list-disc marker:text-primary text-sm text-foreground/70">
+                      <li>
+                        Completed a 6-month Digital Media Marketing internship
+                        under the Pakistan Software Export Board (PSEB).
+                      </li>
+                      <li>
+                        Gained hands-on experience in SEO, social media
+                        marketing, content creation, lead generation, and
+                        digital advertising.
+                      </li>
+                      <li>
+                        Worked on real-world marketing projects and used a
+                        variety of digital marketing tools.
+                      </li>
+                      <li>
+                        Developed practical skills in online branding, audience
+                        engagement, and marketing strategy execution.
+                      </li>
+                    </ul>
+                  </article>
+
+                  <article>
+                    <header className="flex flex-wrap items-baseline gap-2">
+                      <h3 className="text-base md:text-lg font-semibold">
                         TECH-HUB Innovation Center, Faisalabad
                       </h3>
                       <span className="text-xs text-foreground/60">
-                        2025 – Present
+                        2025 – 2025
                       </span>
                     </header>
                     <p className="mt-1 text-sm text-foreground/80">
