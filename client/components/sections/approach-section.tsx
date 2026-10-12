@@ -33,7 +33,7 @@ function ScrollTimeline({ labels }: { labels: string[] }) {
   }, []);
 
   return (
-    <div ref={ref} className="mt-10 hidden md:block" aria-hidden>
+    <div ref={ref} className="mt-10 block" aria-hidden>
       <div className="relative h-1 rounded-full bg-white/10">
         <div
           className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-brand-dark via-brand to-accent2 shadow-[0_0_16px_rgb(var(--brand)/0.7)]"

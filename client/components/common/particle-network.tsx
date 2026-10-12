@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 /**
  * Faint constellation of drifting dots behind the page. Dots near the mouse
- * link up to it. Skipped on touch devices and for reduced motion.
+ * link up to it. Skipped for reduced motion.
  */
 export default function ParticleNetwork() {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -10,12 +10,7 @@ export default function ParticleNetwork() {
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
-    if (
-      !window.matchMedia("(pointer: fine)").matches ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -34,7 +29,7 @@ export default function ParticleNetwork() {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.min(42, Math.round((w * h) / 42000));
+      const count = Math.min(42, Math.max(16, Math.round((w * h) / 42000)));
       pts = Array.from({ length: count }, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
